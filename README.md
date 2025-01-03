@@ -91,3 +91,81 @@ Pozor: změnou se rozumí změna MAC adresy pomoci nástrojů OS Linux (ne změn
 
    # End of custom SOS semestral DHCP configuration
    ```
+8. Pro nastavení nat jsem povolil IP forwarding v soubory `/etc/sysctl.conf` pomocí
+   ```
+   net.ipv4.ip_forward=1
+   ```
+   a aplikoval změnu pomocí `sysctl -p`. Nainstaloval jsem `iptables`
+   ```sh
+   apk add iptables
+   rc-update add iptables
+   ```
+   a následně jsem přidal *iptables pravidla*
+   ```sh
+   # internal network
+   iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+   # routing with restriction
+   iptables -A FORWARD -i eth1 -o eth2 -j ACCEPT
+   iptables -A FORWARD -i eth2 -o eth1 -j REJECT
+   ```
+   a uložil konfiguraci.
+   ```sh
+   /etc/init.d/iptables save
+   ```
+9. Pro tvorbu serveru jsem zvolil `nginx`. Ten jsem spustil následujícím způsobem:
+   ```sh
+   apk add nginx # instalace nginx serveru
+   mkdir -p /var/www/html # tvorba složky pro html soubor
+   ```
+   Poté jsem nasměroval port 80 na html soubor. Konfiguraci jsme provedl pomocí souboru `/etc/nginx/http.d/default.conf`.
+   ```
+   server {
+    listen 80;
+    server_name localhost;
+
+    root /var/www/html;
+    index firewall_stats.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+   }
+   ```
+   Úspěšnost konfigurace jsem ověřil pomocí
+   ```sh
+   nginx -t
+   rc-service nginx start # spustil server
+   ```
+   Html soubory vytvářím automaticky pomocí sh skirtu, který je spouště v periodě jako cron job. Lokace skriptu `/usr/local/bin/update_firewall_stats.sh`.
+   ```sh
+   #!/bin/sh
+
+   # Generování statistik firewallu
+   echo "<html><head><title>Firewall Stats</title></head><body><pre>" > /var/www/html/firewall_stats.html
+   iptables -L -v -n | grep DROP >> /var/www/html/firewall_stats.html
+   echo "</pre></body></html>" >> /var/www/html/firewall_stats.html
+   ```
+   Instalce cronu [Alpine package](https://pkgs.alpinelinux.org/package/edge/main/x86_64/busybox-openrc)
+   ```sh
+   apk add busybox-openrc
+
+   # sputění cronu
+   rc-service crond start
+   rc-update add crond
+
+   # konfigurace cronu, resp. přidání úlohy do cronu
+   crontab -e
+   */1 * * * * /usr/local/bin/update_firewall_stats.sh
+   ```
+
+   Fungování jsem ověřil pomocí commandů
+   ```sh
+   # naplnění daty
+   iptables -A INPUT -s 192.168.1.1 -j DROP
+   iptables -A INPUT -s 192.168.1.2 -j DROP
+   iptables -A INPUT -s 192.168.1.1 -j DROP
+   
+   # stažení dat z web serveru
+   wget http://127.0.0.1
+   ```
