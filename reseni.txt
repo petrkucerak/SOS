@@ -1,7 +1,8 @@
-# Semestrální práce - SOS
+- image: https://filesender.cesnet.cz/?s=download&token=85e4d608-f632-434e-81e0-dd4d14fdd62c
+- login: root
+- password: 7777
 
 - autor: kucerp28
-- image: https://filesender.cesnet.cz/?s=download&token=85e4d608-f632-434e-81e0-dd4d14fdd62c
 - repo: https://github.com/petrkucerak/SOS
 
 ## Popis postupu
