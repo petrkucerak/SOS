@@ -39,6 +39,8 @@ Pozor: změnou se rozumí změna MAC adresy pomoci nástrojů OS Linux (ne změn
 
 ## Řešení
 
+Výsledný image https://filesender.cesnet.cz/?s=download&token=85e4d608-f632-434e-81e0-dd4d14fdd62c.
+
 1. Stáhnul jsem si image [Apline Linuxu x86_64](https://alpinelinux.org/downloads/) a soustil ve VB s konfigurací popsanou v [dokumentaci](https://wiki.alpinelinux.org/wiki/Installing_Alpine_in_a_virtual_machine).
 2. Provedl základní konfiguraci pomocí `setup-alpine`
    ```
