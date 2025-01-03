@@ -58,4 +58,36 @@ Pozor: změnou se rozumí změna MAC adresy pomoci nástrojů OS Linux (ne změn
    rc-service ntpd start
    date # validace
    ```
-6. 
+6. V sbouboru `/etc/network/interfaces` jsem donastavil rozhraní `eth1` a `eth2`:
+   ```
+   auto lo
+   iface lo inet loopback
+
+   auto eth0
+   iface eth0 inet DHCP
+      pre-up ip link set dev eth0 address 06:00:00:00:10:28
+
+   auto eth1
+   iface eth1 inet static
+      address 192.168.50.1
+      netmask 255.255.255.0
+
+   auto eth2
+   iface eth2 inet static
+      address 192.168.55.1
+      netmask 255.255.255.0
+   ```
+7. Nainstaloval jsem `dnsmasq` a nakonfiguroval DHCP pro druhé rozhraní.
+   ```sh
+   apk add dnsmasq # instalace dnsmasq
+   ```
+   Soubor `/etc/dnsmasq.conf`
+   ```
+   # Custom configuration for SOS semestral work
+
+   interface=eth1
+   dhcp-range=192.168.50.100,192.168.50.200,12h
+   dhcp-option=option:router,192.168.50.1
+
+   # End of custom SOS semestral DHCP configuration
+   ```
