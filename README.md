@@ -169,3 +169,9 @@ Pozor: změnou se rozumí změna MAC adresy pomoci nástrojů OS Linux (ne změn
    # stažení dat z web serveru
    wget http://127.0.0.1
    ```
+10. Pro exponutí jsme využil `autossh`. Změnil jsem zdroj balíčků na komunitní `/etc/apk/repositories` 
+   ```sh
+   apk update # zaktualizoval
+   apk add autossh # nainstaloval
+   autossh -M 0 -f -N -R 1028:192.168.55.1:22 kucerp28@k332.feld.cvut.cz # pro trvalé otevření ssh portu
+   ```
