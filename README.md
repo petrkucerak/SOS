@@ -36,3 +36,26 @@ Pozor: změnou se rozumí změna MAC adresy pomoci nástrojů OS Linux (ne změn
 - Celkově se snažte vytvořit co nejmenší image
 
 - pro sdílení image je výhodné využít například službu CESNET FileSender  https://filesender.cesnet.cz/ (pozor na dobu expirace odkazu, je vhodné nastavit co největší)
+
+## Řešení
+
+1. Stáhnul jsem si image [Apline Linuxu x86_64](https://alpinelinux.org/downloads/) a soustil ve VB s konfigurací popsanou v [dokumentaci](https://wiki.alpinelinux.org/wiki/Installing_Alpine_in_a_virtual_machine).
+2. Provedl základní konfiguraci pomocí `setup-alpine`
+   ```
+   username: root
+   heslo: 7777
+   ```
+3. Zjistil jsem si UserID pomocí commandu
+   ```sh
+   id -u kucerp28
+   ```
+   a MAC adresa síťového rozhraní bude vycházet z `1028`, bude tedy `"06:00:00:00:10:28"`.
+4. Nastavil jsem rozhraní `eth0` v souboru `/etc/network/interfaces` `pre-up ip link set dev eth0 address 06:00:00:00:10:28` a restartoval network službu `rc-service networking restart`.
+5. Pro synchronizaci času jsme zvolil službu `chrony`. Instaloval jsem ji již při konfiguraci Apline, pro jistotu jsme ověřil ale její funkčnost a znovu inicializoval pomocí:
+   ```sh
+   apk add chrony
+   ntpd -qg # set NTP servery
+   rc-service ntpd start
+   date # validace
+   ```
+6. 
