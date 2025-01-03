@@ -14,25 +14,25 @@ Pozor: změnou se rozumí změna MAC adresy pomoci nástrojů OS Linux (ne změn
 
 - stroj si pravidelně synchronizuje čas z Internetu
 
--na druhém rozhraní stroj poskytuje DHCP server pro síť 192.168.50.0/24, rozdává adresy v rozsahu 192.168.50.100-200, sám má adresu 192.168.50.1 a je pro tuto síť výchozí branou
+- na druhém rozhraní stroj poskytuje DHCP server pro síť 192.168.50.0/24, rozdává adresy v rozsahu 192.168.50.100-200, sám má adresu 192.168.50.1 a je pro tuto síť výchozí branou
 
--na třetím rozhraní má sám adresu 192.168.55.1 
+- na třetím rozhraní má sám adresu 192.168.55.1 
 
--stroj dělá router do Internetu (NAT) pro obě ty výše uvedené vnitřní sítě  a směruje také mezi nimi navzájem ovšem s tím, že nová TCP spojení dovoluje pouze ze sítě 50 do sítě 55 nikoliv opačně 
+- stroj dělá router do Internetu (NAT) pro obě ty výše uvedené vnitřní sítě  a směruje také mezi nimi navzájem ovšem s tím, že nová TCP spojení dovoluje pouze ze sítě 50 do sítě 55 nikoliv opačně 
 
--stroj pravidelně zjišťuje dostupnost vnitřní adresy 192.168.55.100  a pokud je dostupná s otevřeným portem 22, zařídí export tohoto(SSH) portu tak, aby byl dostupny z vnějšího (prvního) rozhraní z portu 8822
+- stroj pravidelně zjišťuje dostupnost vnitřní adresy 192.168.55.100  a pokud je dostupná s otevřeným portem 22, zařídí export tohoto(SSH) portu tak, aby byl dostupny z vnějšího (prvního) rozhraní z portu 8822
 
--Na portu 80 prvního rozhraní běží web server kde bude jednoduchou formou zobrazována pravidelně aktualizovaná statistika/počty firewallem zahozených paketů nevyhovujících zadání z bodu 6 pro jednotlivé unikátní IP adresy
+- Na portu 80 prvního rozhraní běží web server kde bude jednoduchou formou zobrazována pravidelně aktualizovaná statistika/počty firewallem zahozených paketů nevyhovujících zadání z bodu 6 pro jednotlivé unikátní IP adresy
 
--volitelně : bude port 22 z vnitřního počítače exportován i na veřejnou adresu serveru K332 (máte tam ssh účet) na portu s číslem Vašeho userID nebo prvního vyššího volného. Pozor SSH je z externích sítí mimo ČVUT nově(cca od konce 2023) zcela filtrováno (nejen porty, ale i obsah) je proto třeba testovat "ze školy", nebo s využitím školní VPN. Obejití tohoto (ČVUT SSH filtr) omezení není potřeba vyřešit v rámci generovaného image, jen s ním při případném testování počítat.
+- **volitelně**: bude port 22 z vnitřního počítače exportován i na veřejnou adresu serveru K332 (máte tam ssh účet) na portu s číslem Vašeho userID nebo prvního vyššího volného. Pozor SSH je z externích sítí mimo ČVUT nově (cca od konce 2023) zcela filtrováno (nejen porty, ale i obsah) je proto třeba testovat "ze školy", nebo s využitím školní VPN. Obejití tohoto (ČVUT SSH filtr) omezení není potřeba vyřešit v rámci generovaného image, jen s ním při případném testování počítat.
 
-Poznámky:
--zde v TEAMS odevzdáte pouze "reseni.txt" (jen txt,..... NE doc, pdf, ani nic jiného) soubor se stručným popisem co jste udělal a jak ke každému bodu,
+### Poznámky:
+- zde v TEAMS odevzdáte pouze "reseni.txt" (jen txt,..... NE doc, pdf, ani nic jiného) soubor se stručným popisem co jste udělal a jak ke každému bodu,
 
 - .txt bude obsahovat link na Váš image jako první řádek a také login informace: root/password
 
--Známka klas. zápočtu bude odvozena on správnosti a kvality provedení výše uvedených úkolů, povinné pro zápočet jsou první 4 body (tedy musí se připojovat sám k Internetu přes DHCP a fungovat alespoň DHCP server pro první vnitřní síť) a zároveň nesmí být Váš .ova image větší než 1G. 
+- Známka klas. zápočtu bude odvozena on správnosti a kvality provedení výše uvedených úkolů, povinné pro zápočet jsou první 4 body (tedy musí se připojovat sám k Internetu přes DHCP a fungovat alespoň DHCP server pro první vnitřní síť) a zároveň nesmí být Váš .ova image větší než 1G. 
 
--Celkově se snažte vytvořit co nejmenší image
+- Celkově se snažte vytvořit co nejmenší image
 
--pro sdílení image je výhodné využít například službu CESNET FileSender  https://filesender.cesnet.cz/ (pozor na dobu expirace odkazu, je vhodné nastavit co největší)
+- pro sdílení image je výhodné využít například službu CESNET FileSender  https://filesender.cesnet.cz/ (pozor na dobu expirace odkazu, je vhodné nastavit co největší)
